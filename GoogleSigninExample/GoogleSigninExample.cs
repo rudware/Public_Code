@@ -14,7 +14,7 @@ using UnityEngine.SceneManagement;
 using System.IO;
 using Custom.Define;
 
-public class GoogleSignInSDKTest : MonoSigletone<GoogleSignInSDKTest>
+public class GoogleSigninExample : MonoSigletone<GoogleSigninExample>
 {
     public string webClientId = ""; //Google Signin을 위한 Auth ID
 
