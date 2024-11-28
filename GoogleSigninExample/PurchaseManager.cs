@@ -297,50 +297,34 @@ public class PurchasedLevelData
 {
     [SerializeField]
     string id;
-    [SerializeField]
-    string level;
-    [SerializeField]
-    string purchasedTimestamp;
-    [SerializeField]
-    string expireTimestamp;
-    [SerializeField]
-    string purchasedDateTime;
-    [SerializeField]
-    string expireDateTime;
 
-    public string LevelIndex { get { return level; } }
+    [SerializeField]
+    string purchasedTimestamp;  //구매 일시 타임 스탬프
+    [SerializeField]
+    string expireTimestamp;  //기간 한정 상품의 경우 만료 일시 타임스탬프
+    [SerializeField]
+    string purchasedDateTime; //구매 일시 데이트타임 
+    [SerializeField]
+    string expireDateTime; //만료 일시 데이트타임
+
     public string PurchasedDateTime { get { return purchasedDateTime; } }
 
     public string PurchasedTimestamp { get { return purchasedTimestamp; } }
     public void SetDateTime()
     {
-        long mNowTimestamp = DateTimeOffset.Now.ToUnixTimeMilliseconds();
-        purchasedTimestamp = mNowTimestamp.ToString();
-        purchasedDateTime = DateTimeOffset.FromUnixTimeMilliseconds(mNowTimestamp).ToLocalTime().ToString();
-        DateTimeOffset mExpireTime = DateTimeOffset.FromUnixTimeMilliseconds(mNowTimestamp).AddYears(1);
+        long mNowTimestamp = DateTimeOffset.Now.ToUnixTimeMilliseconds();  //현재 시간을 타임스탬프로 설정
+        purchasedTimestamp = mNowTimestamp.ToString(); //string 으로 저장
+        purchasedDateTime = DateTimeOffset.FromUnixTimeMilliseconds(mNowTimestamp).ToLocalTime().ToString(); //타임 스탬프를 현지 시간으로 변환하여 DateTime으로 저장
+        DateTimeOffset mExpireTime = DateTimeOffset.FromUnixTimeMilliseconds(mNowTimestamp).AddYears(1); //1년후 만료 되게끔 설정
         expireDateTime = mExpireTime.ToString();
         expireTimestamp = mExpireTime.ToUnixTimeMilliseconds().ToString();
     }
 
-    public void SetData(string aLevelIndex)
+    public void SetData(string aId)
     {
-        id = aLevelIndex;
-        level = aLevelIndex;
+        id = aId;
         SetDateTime();
     }
-
-    public void DataInit(Net_PurchadedLevelData aData)
-    {
-        level = aData.LevelIndex;
-        purchasedTimestamp = aData.PurchasedTimestamp;
-        expireTimestamp = aData.ExpireTimestamp;
-        long mNowTimestamp = long.Parse(purchasedTimestamp);
-        purchasedDateTime = DateTimeOffset.FromUnixTimeSeconds(mNowTimestamp).ToLocalTime().ToString();
-        long mExTimestamp = long.Parse(expireTimestamp);
-        expireDateTime = DateTimeOffset.FromUnixTimeSeconds(mExTimestamp).ToLocalTime().ToString();
-    }
-
-
 
 }
 
